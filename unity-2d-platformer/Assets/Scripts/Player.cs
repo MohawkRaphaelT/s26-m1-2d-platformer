@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // VARAIBLES
+    // VARIABLES
     // We want to know about the player's RigidBody2D component to add forces to it
     public Rigidbody2D rb2d;
     // We want the player's animator component to synchronize its states to player movement
