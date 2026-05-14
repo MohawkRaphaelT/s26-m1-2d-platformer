@@ -1305,6 +1305,36 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 3, y: 2, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 11
+      m_TileSpriteIndex: 11
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 3, y: 3, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 13
+      m_TileSpriteIndex: 13
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 3, y: 4, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 19
+      m_TileSpriteIndex: 19
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 1
@@ -1329,11 +1359,11 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 58b81644f27f99444819f41438e8093f, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: c75e2559c478d8b43ad63170a57cfefe, type: 2}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 7e34757bc45f01546a1f4852b0db17eb, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: c656fcd24372601448b8447b017736f2, type: 2}
-  - m_RefCount: 40
+  - m_RefCount: 41
     m_Data: {fileID: 11400000, guid: 54d1df16bc13abf48b521e522100a4a3, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: f4ff9de99e012b94eacc4ecd16f77716, type: 2}
@@ -1345,7 +1375,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 06d6b3ee48e3c3340a8ec41cde85200d, type: 2}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 476b28760b07f2e4ba499b56397d4396, type: 2}
-  - m_RefCount: 16
+  - m_RefCount: 17
     m_Data: {fileID: 11400000, guid: f42dcc09227bee048813d948bc041910, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: ba6d1c17f83316e4997cc7b60a01951a, type: 2}
@@ -1378,11 +1408,11 @@ Tilemap:
     m_Data: {fileID: 1649510100, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1635737894, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: -272280585, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -984588792, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
-  - m_RefCount: 40
+  - m_RefCount: 41
     m_Data: {fileID: -2130257327, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -886487041, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
@@ -1394,7 +1424,7 @@ Tilemap:
     m_Data: {fileID: 1042965986, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 1807125615787039003, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
-  - m_RefCount: 16
+  - m_RefCount: 17
     m_Data: {fileID: 1564021606, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 98490739, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
@@ -1405,7 +1435,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 939615986, guid: 58e20f3463e1643419cf240dcb6ec152, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 82
+  - m_RefCount: 85
     m_Data:
       e00: 1
       e01: 0
@@ -1424,7 +1454,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 82
+  - m_RefCount: 85
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -5334,13 +5364,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   rb2d: {fileID: 0}
   animator: {fileID: 0}
-  speedX: 5
+  speedX: 10
   capsuleCollider: {fileID: 1896793610}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  jumpForce: 5
-  GroundCheckDistance: 1.1
+  jumpForce: 8
+  jumpTimeMax: 0.2
+  fallMultiplier: 2.5
+  GroundCheckDistance: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
