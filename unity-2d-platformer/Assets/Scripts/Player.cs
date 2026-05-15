@@ -28,11 +28,6 @@ public class Player : MonoBehaviour
     private float coyoteTimeRemaining;
     private float jumpTimeRemaining;
 
-    // Phsyics / raycast variables
-    Vector2 edgeClipTopOrigin;
-    Vector2 edgeClipBotOrigin;
-    Vector2 edgeClipRayDistance;
-
 
     void Update()
     {
@@ -54,10 +49,10 @@ public class Player : MonoBehaviour
             Vector2 centre = transform.position;
             Vector2 extents = capsuleCollider.bounds.extents;
             float extentsX = isFacingLeft ? -extents.x : +extents.x;
-            edgeClipTopOrigin = centre + new Vector2(extentsX, +extents.y);
-            edgeClipBotOrigin = centre + new Vector2(extentsX, -extents.y);
+            Vector2 edgeClipTopOrigin = centre + new Vector2(extentsX, +extents.y * 0.95f);
+            Vector2 edgeClipBotOrigin = centre + new Vector2(extentsX, -extents.y * 0.85f);
             Vector2 direction = Vector2.Normalize(new Vector2(extentsX, 0));
-            edgeClipRayDistance = direction * raycastDistance;
+            Vector2 edgeClipRayDistance = direction * raycastDistance;
             bool hitTop = Physics2D.Raycast(edgeClipTopOrigin, direction, raycastDistance, groundLayer);
             bool hitBot = Physics2D.Raycast(edgeClipBotOrigin, direction, raycastDistance, groundLayer);
             if (hitTop == false && hitBot is false)

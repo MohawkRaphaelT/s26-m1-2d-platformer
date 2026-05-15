@@ -8,16 +8,29 @@ public class MovingPlatform : MonoBehaviour
     public int currentWaypointIndex;
     public float moveSpeed = 1;
 
-    private List<Rigidbody2D> connectedObjects;
+    private List<Rigidbody2D> connectedObjects = new();
 
+    private void Start()
+    {
+        Vector2 startPosition = waypoints[currentWaypointIndex].position;
+        transform.position = startPosition;
+    }
 
     void FixedUpdate()
     {
-        Vector2 current = this.transform.position;
+        // Get current and next (target) positions
+        Vector2 current = rb2d.transform.position;
         Vector2 next = waypoints[currentWaypointIndex].position;
+        // Max distance to move towards targe
         float maxDistance = moveSpeed * Time.deltaTime;
+
+        // Get new position moving in that direction without overshootign the target.
         Vector2 newPosition = Vector2.MoveTowards(current, next, maxDistance);
+        
+        // Delta means difference between 2 things.
+        // Here it is the between previous and current position.
         Vector2 delta = newPosition - current;
+        
         // Move platform
         rb2d.MovePosition(newPosition);
         // Move everything on platform
@@ -27,7 +40,8 @@ public class MovingPlatform : MonoBehaviour
             connectedObject.MovePosition(objectPosition);
         }
 
-        bool isAtWaypoint = Vector2.Distance(newPosition, next) < 0.01f;
+        // Go to next waypoint if at waypoint
+        bool isAtWaypoint = delta.magnitude < 0.01f;
         if (isAtWaypoint)
         {
             currentWaypointIndex++;
@@ -37,7 +51,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Rigidbody2D other = collision.otherRigidbody;
+        Rigidbody2D other = collision.rigidbody;
         if (other == null)
             return;
 
@@ -49,7 +63,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Rigidbody2D other = collision.otherRigidbody;
+        Rigidbody2D other = collision.rigidbody;
         if (other == null)
             return;
 
