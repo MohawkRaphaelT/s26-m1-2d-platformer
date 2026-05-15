@@ -6135,11 +6135,13 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1896793611}
   moveSpeed: 10
   jumpSpeed: 10
+  maxJumpTime: 0.3
+  maxCoyoteTime: 0.25
+  fallGravity: -10
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   raycastDistance: 0.05
-  maxCoyoteTime: 0.25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

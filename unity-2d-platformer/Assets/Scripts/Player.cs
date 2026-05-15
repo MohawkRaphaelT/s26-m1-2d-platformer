@@ -16,26 +16,29 @@ public class Player : MonoBehaviour
     public float moveSpeed = 10f;
     //
     public float jumpSpeed = 10f;
+    public float maxJumpTime = 0.300f; // in seconds
+    public float maxCoyoteTime = 0.100f; // in seconds
+    public float fallGravity = -10; // y
     //
     public LayerMask groundLayer;
     //
     public float raycastDistance = 0.05f;
-    //
-    public float maxCoyoteTime = 0.100f; // in seconds
 
     //
     private float coyoteTimeRemaining;
+    private float jumpTimeRemaining;
 
     // Phsyics / raycast variables
     Vector2 edgeClipTopOrigin;
     Vector2 edgeClipBotOrigin;
     Vector2 edgeClipRayDistance;
 
+
     void Update()
     {
         ///////////////////////////////////////////////////////////////////////////////
         /// MOVE HORIZONTAL
-        
+
         // Get the player's movement input from Unity's legacy input system
         float moveX = Input.GetAxis("Horizontal");
         // Math.Abs() gives us the number's absolute value
@@ -72,6 +75,13 @@ public class Player : MonoBehaviour
         ///////////////////////////////////////////////////////////////////////////////
         /// JUMP
 
+        // Additional gravity while falling
+        if (rb2d.linearVelocityY < 0)
+        {
+            rb2d.AddForceY(fallGravity);
+        }
+
+
         // Decrement coyote time timer
         coyoteTimeRemaining -= Time.deltaTime;
 
@@ -94,9 +104,27 @@ public class Player : MonoBehaviour
             {
                 // Remove ability to coyote jump
                 coyoteTimeRemaining = 0;
+                // How much time player can continue jumping for
+                jumpTimeRemaining = maxJumpTime;
+            }
+        }
+
+        // If we can continue holding down jump
+        if (jumpTimeRemaining > 0)
+        {
+            // Are we holding spacebar this frame?
+            if (Input.GetKey(KeyCode.Space))
+            {
                 // Add force for jumping
                 rb2d.linearVelocityY = jumpSpeed;
             }
+            else
+            {
+                // End jump time
+                jumpTimeRemaining = 0;
+            }
+            // Decrement timer
+            jumpTimeRemaining -= Time.deltaTime;
         }
 
         animator.SetBool("isGrounded", isGrounded);
