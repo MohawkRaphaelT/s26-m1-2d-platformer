@@ -7,17 +7,11 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb2d;
     // We want the player's animator component to synchronize its states to player movement
     public Animator animator;
+    // We want to be able to control the sprite flipX to align with facing direction when we move
+    public SpriteRenderer spriteRenderer;
+
     // How fast do we want the player to move?
     public float speedX = 1f;
-
-    void Start()
-    {
-        // Easy way to get the reference to the two components
-        // GetComponent asks this GameObject for the variable type.
-        // It returns the first one it finds, null if not attached.
-        rb2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-    }
 
 
     void Update()
@@ -26,14 +20,33 @@ public class Player : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         // Math.Abs() gives us the number's absolute value
         // eg. Abs(+1) and Abs(-1) both give us +1.
-        if (Mathf.Abs(moveX) > 0.1f)
+        bool isMovingHorizontally = Mathf.Abs(moveX) > 0.1f;
+        if (isMovingHorizontally)
         {
-            // Calculate the force to apply to the player (in Newtons if you want to look that up).
-            float force = moveX * speedX;
-            rb2d.AddForceX(force, ForceMode2D.Force);
+            // move X is positive means we are moving right
+            bool isFacingLeft = moveX < 0;
+            spriteRenderer.flipX = isFacingLeft;
+
+            // Set move speed (horizontal) directly, overrides last value
+            rb2d.linearVelocityX = moveX * speedX;
         }
         // Synchronize the animator's parameters to this player's movement so it can
         // automatically control the player's animation.
         animator.SetFloat("moveSpeedX", Mathf.Abs(moveX));
     }
+
+    // Runs every time we change something in the inspector of this component,
+    // or Reset is called, or when Unity recompiles, etc.
+    private void OnValidate()
+    {
+        if (rb2d == null)
+            rb2d = GetComponent<Rigidbody2D>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
 }
