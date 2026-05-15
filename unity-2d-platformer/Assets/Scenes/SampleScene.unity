@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 644007670}
   - component: {fileID: 644007669}
   - component: {fileID: 644007671}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2044,7 +2044,7 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
+  m_UseDelaunayMesh: 1
 --- !u!1 &1255610293
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,7 +2062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1255610294
 Transform:
   m_ObjectHideFlags: 0
@@ -5893,6 +5893,9 @@ MonoBehaviour:
   animator: {fileID: 1896793613}
   spriteRenderer: {fileID: 1896793611}
   speedX: 10
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
