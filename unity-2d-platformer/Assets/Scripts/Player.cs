@@ -12,20 +12,25 @@ public class Player : MonoBehaviour
     // We want to be able to control the sprite flipX to align with facing direction when we move
     public SpriteRenderer spriteRenderer;
 
+    // PLAYER PARAMETERS
     // How fast do we want the player to move?
     public float moveSpeed = 10f;
-    //
+    // How fast do they jump?
     public float jumpSpeed = 10f;
+    // For how long can they press button to jump to gain extra height?
     public float maxJumpTime = 0.300f; // in seconds
+    // For how long after falling off an edge can they still jump?
     public float maxCoyoteTime = 0.100f; // in seconds
+    // What is the speed of additional gravity while falling?
     public float fallGravity = -10; // y
-    //
+    // What layer do we consider to be ground?
     public LayerMask groundLayer;
-    //
+    // How far to shoot raycasts (currently only for sliding down walls)
     public float raycastDistance = 0.05f;
 
-    //
+    // How long players have left to do a coyote jump
     private float coyoteTimeRemaining;
+    // How long players have left to press button to jump to gain extra height
     private float jumpTimeRemaining;
 
 
@@ -76,11 +81,10 @@ public class Player : MonoBehaviour
             rb2d.AddForceY(fallGravity);
         }
 
-
         // Decrement coyote time timer
         coyoteTimeRemaining -= Time.deltaTime;
 
-        // 
+        // Do raycast from centre of player downward (past feet a bit) to see if we are on ground
         Vector2 rayOrigin = this.transform.position;
         Vector2 rayDirection = Vector2.down;
         float distance = 1.05f;
@@ -122,6 +126,8 @@ public class Player : MonoBehaviour
             jumpTimeRemaining -= Time.deltaTime;
         }
 
+        // Synchronize the animator's parameters to this player so it can
+        // automatically control the player's animation.
         animator.SetBool("isGrounded", isGrounded);
     }
 

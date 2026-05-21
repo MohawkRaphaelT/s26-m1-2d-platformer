@@ -1,20 +1,17 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
+    [Header("Debug")]
+    public Color GizmosColor = Color.blue;
+    public float GizmosScale = 1;
+
+    [Header("Parameters")]
     public Rigidbody2D rb2d;
     public Transform[] waypoints;
     public int currentWaypointIndex;
     public float moveSpeed = 1;
 
-    private List<Rigidbody2D> connectedObjects = new();
-
-    private void Start()
-    {
-        Vector2 startPosition = waypoints[currentWaypointIndex].position;
-        transform.position = startPosition;
-    }
 
     void FixedUpdate()
     {
@@ -26,51 +23,56 @@ public class MovingPlatform : MonoBehaviour
 
         // Get new position moving in that direction without overshootign the target.
         Vector2 newPosition = Vector2.MoveTowards(current, next, maxDistance);
-        
+
         // Delta means difference between 2 things.
         // Here it is the between previous and current position.
         Vector2 delta = newPosition - current;
-        
+
         // Move platform
         rb2d.MovePosition(newPosition);
-        // Move everything on platform
-        foreach (Rigidbody2D connectedObject in connectedObjects)
-        {
-            Vector2 objectPosition = connectedObject.position + delta;
-            connectedObject.MovePosition(objectPosition);
-        }
 
         // Go to next waypoint if at waypoint
         bool isAtWaypoint = delta.magnitude < 0.01f;
         if (isAtWaypoint)
         {
+            // Increment by 1
             currentWaypointIndex++;
+            // % is the remainder operator
+            // If we are at the end of ther array, loop back to 0
+            // eg. if current index is 5 and waypoints.length is 5, 
+            // then 5 divided by 5 is 1 remainder 0
             currentWaypointIndex %= waypoints.Length;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnValidate()
     {
-        Rigidbody2D other = collision.rigidbody;
-        if (other == null)
-            return;
-
-        if (connectedObjects.Contains(other) == false)
+        // Only run if waypoints exists and has at least 1 waypoint
+        if (waypoints.Length > 0 && waypoints[0] != null)
         {
-            connectedObjects.Add(other);
+            // Set start position when starting
+            Vector2 startPosition = waypoints[currentWaypointIndex].position;
+            transform.position = startPosition;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        Rigidbody2D other = collision.rigidbody;
-        if (other == null)
-            return;
-
-        if (connectedObjects.Contains(other) == true)
+        // Set debug color
+        Gizmos.color = GizmosColor;
+        // Go through all waypoints minus last one
+        for (int i = 0; i < waypoints.Length - 1; i++)
         {
-            connectedObjects.Remove(other);
+            // Draw lines from-to waypoints
+            Vector3 from = waypoints[i + 0].position;
+            Vector3 to = waypoints[i + 1].position;
+            Gizmos.DrawLine(from, to);
+            // Draw box on first of two waypoints
+            Gizmos.DrawCube(from, Vector3.one * GizmosScale);
         }
+        // Draw box on last waypoint
+        // [^1] array index means: 1 from the end of the array, or length - 1.
+        Gizmos.DrawCube(waypoints[^1].position, Vector3.one * GizmosScale);
     }
 
 }
