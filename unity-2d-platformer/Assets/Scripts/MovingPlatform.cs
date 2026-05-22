@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
@@ -47,6 +48,10 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnValidate()
     {
+        // Stop running code here if the game is playing
+        if (Application.isPlaying)
+            return;
+
         // Only run if waypoints exists and has at least 1 waypoint
         if (waypoints.Length > 0 && waypoints[0] != null)
         {
@@ -58,6 +63,10 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        // Prevent running if we don't have waypoints
+        if (waypoints == null || waypoints.Length == 0)
+            return;
+
         // Set debug color
         Gizmos.color = GizmosColor;
         // Go through all waypoints minus last one
